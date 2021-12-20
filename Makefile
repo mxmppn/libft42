@@ -6,7 +6,7 @@
 #    By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 20:02:51 by mpepin            #+#    #+#              #
-#    Updated: 2021/12/16 16:23:54 by mpepin           ###   ########lyon.fr    #
+#    Updated: 2021/12/20 17:01:05 by mpepin           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,13 @@ OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
 # Bonus files
 SRCB =	ft_lstnew.c \
 		ft_lstadd_front.c \
-		ft_lstsize.c 
+		ft_lstsize.c \
+		ft_lstlast.c \
+		ft_lstadd_back.c \
+		ft_lstdelone.c \
+		ft_lstclear.c \
+		ft_lstiter.c \
+		ft_lstmap.c
 
 OBJSB = ${SRCB:.c=.o}
 OBJECTS_BONUS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJSB))
@@ -67,6 +73,8 @@ FLAGS = -Wall -Wextra -Werror
 # Delete
 RM = rm -f
 
+all: $(NAME)
+
 $(OBJS_DIR)%.o:	%.c libft.h
 				@mkdir -p $(OBJS_DIR)
 				@echo "Compiling: $<"
@@ -76,9 +84,9 @@ $(NAME):	$(OBJECTS_PREFIXED)
 			@ar rcs $(NAME) $(OBJECTS_PREFIXED)
 			@echo "Libft Done !"
 
-all: $(NAME)
-
-bonus: $(SRCB)
+bonus:		$(NAME) $(OBJECTS_BONUS_PREFIXED)
+			@ar rcs $(NAME) $(OBJECTS_BONUS_PREFIXED)
+			@echo "Libft Bonus Done !"
 
 clean:
 			rm -rf $(OBJS_DIR)
@@ -87,7 +95,3 @@ fclean:		clean
 			rm -f $(NAME)
 
 re:			fclean all
-
-bonus:		$(OBJECTS_BONUS_PREFIXED)
-			@ar r $(NAME) $(OBJECTS_BONUS_PREFIXED)
-			@echo "Libft Bonus Done !"
